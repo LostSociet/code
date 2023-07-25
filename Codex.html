@@ -11,16 +11,49 @@
       height: 100vh;
       margin: 0;
     }
+    #binaryBackground {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      user-select: none;
+    }
     #keycode {
-      color: green; /* Changed the text color to green */
+      color: green;
       font-size: 30px;
       font-family: monospace;
       padding: 20px;
-      border: 2px solid green; /* Changed the border color to green */
+      border: 2px solid green;
+      white-space: nowrap; /* Prevent the keycode from wrapping */
+      overflow: hidden; /* Hide the overflowed text */
+    }
+    .binaryNumber {
+      position: absolute;
+      color: green;
+      font-size: 40px; /* Increase the font size for the binary numbers */
+      pointer-events: none;
+      user-select: none;
+      opacity: 0;
+      animation: fadeOut 1s ease-in-out;
+    }
+
+    @keyframes fadeOut {
+      0%, 100% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
+  <div id="binaryBackground"></div>
   <div id="keycode"></div>
 
   <script>
@@ -33,11 +66,53 @@
       return code;
     }
 
+    function generateBinaryNumbers(length) {
+      let binary = '';
+      for (let i = 0; i < length; i++) {
+        binary += Math.round(Math.random());
+      }
+      return binary;
+    }
+
+    function updateBinaryBackground() {
+      const binaryBackground = document.getElementById('binaryBackground');
+      const binaryNumbers = generateBinaryNumbers(200);
+      binaryBackground.innerText = binaryNumbers;
+      setTimeout(updateBinaryBackground, 200);
+    }
+
+    // Start updating binary background
+    updateBinaryBackground();
+
     // Generate a random 10-character code
     const generatedCode = generateRandomCode(10);
 
-    // Display the generated code on the page
-    document.getElementById("keycode").innerText = generatedCode;
+    // Display the generated code on the page with a typewriting animation
+    const keycodeElement = document.getElementById("keycode");
+    const typewriterDelay = 100; // Adjust this value to control the typewriting speed
+    let charIndex = 0;
+    function typeKeycode() {
+      keycodeElement.innerText = generatedCode.substring(0, charIndex);
+      charIndex++;
+      if (charIndex <= generatedCode.length) {
+        setTimeout(typeKeycode, typewriterDelay);
+      }
+    }
+    typeKeycode();
+
+    // Function to create and fade away binary number at mouse click
+    document.addEventListener('click', function(event) {
+      const binaryNumber = document.createElement('div');
+      binaryNumber.classList.add('binaryNumber');
+      binaryNumber.style.top = (event.clientY - 20) + 'px'; // Adjusted position to center the binary numbers
+      binaryNumber.style.left = (event.clientX - 10) + 'px'; // Adjusted position to center the binary numbers
+      binaryNumber.innerText = Math.round(Math.random());
+      document.body.appendChild(binaryNumber);
+
+      setTimeout(function() {
+        document.body.removeChild(binaryNumber);
+      }, 2000);
+    });
   </script>
 </body>
 </html>
