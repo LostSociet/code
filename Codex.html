@@ -1,13 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Generate Code</title>
+  <title>Generated Keycode</title>
+  <style>
+    body {
+      background-color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    #keycode {
+      color: white;
+      font-size: 30px;
+      font-family: monospace;
+      padding: 20px;
+      border: 2px solid white;
+    }
+  </style>
 </head>
 <body>
-  <div>
-    <h2>Generated Code:</h2>
-    <p id="generatedCode"></p>
-  </div>
+  <div id="keycode"></div>
 
   <script>
     function generateRandomCode(length) {
@@ -22,11 +36,8 @@
     // Generate a random 10-character code
     const generatedCode = generateRandomCode(10);
 
-    // Store the generated code in localStorage
-    localStorage.setItem('generatedCode', generatedCode);
-
     // Display the generated code on the page
-    document.getElementById("generatedCode").innerText = generatedCode;
+    document.getElementById("keycode").innerText = generatedCode;
   </script>
 </body>
 </html>
