@@ -1,120 +1,91 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Generated Keycode</title>
-  <style>
-    body {
-      background-color: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      overflow: hidden; /* Hide scrollbars */
-    }
-    #keycode {
-      color: green;
-      font-size: 30px;
-      font-family: monospace;
-      padding: 20px;
-      border: 2px solid green; /* Adding the green outline box */
-      white-space: nowrap; /* Prevent the text from wrapping */
-      overflow: hidden; /* Hide the overflowed text */
-    }
-    .binaryNumber {
-      position: absolute;
-      color: green;
-      font-size: 40px; /* Increase the font size for the binary numbers */
-      pointer-events: none;
-      user-select: none;
-      opacity: 0;
-      animation: fadeOut 2s ease-in-out;
-    }
-
-    @keyframes fadeOut {
-      0%, 100% {
-        opacity: 1;
-      }
-      90% {
-        opacity: 1;
-      }
-      100% {
-        opacity: 0;
-      }
-    }
-  </style>
+    <title>Generated Keycode</title>
+    <style>
+        /* Your existing CSS styles */
+    </style>
 </head>
 <body>
-  <div id="keycode"></div>
+    <div id="keycode"></div>
 
-  <script>
-    function generateRandomCode(length) {
-      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let code = '';
-      for (let i = 0; i < length; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        code += characters.charAt(randomIndex);
-      }
-      return code;
-    }
+    <script>
+        // Your existing JavaScript code
 
-    async function sendKeycodeToDiscord(keycode) {
-      const webhookURL = 'https://discord.com/api/webhooks/1133224788115079168/Aew8Py8biJmtqlCl23e9HDywn3iGJfAgXL8uF-P6qelx9YSAdkG2bEYCaaYy5rdvDl_3';
-      const payload = {
-        content: keycode
-      };
+        // Function to generate a random keycode
+        function generateRandomKeycode(length) {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let keycode = '';
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * characters.length);
+                keycode += characters.charAt(randomIndex);
+            }
+            return keycode;
+        }
 
-      try {
-        const response = await fetch(webhookURL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(payload)
+        // Function to send the keycode to the server using AJAX
+        function sendKeycodeToServer(keycode) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "save_keycode.php", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("keycode=" + keycode);
+        }
+
+        // Function to display the generated keycode
+        function displayKeycode(keycode) {
+            document.getElementById("keycode").innerText = keycode;
+        }
+
+        // Function to handle the generation, sending, and displaying of the keycode
+        function generateAndSendKeycode() {
+            const generatedKeycode = generateRandomKeycode(10);
+            displayKeycode(generatedKeycode);
+            sendKeycodeToServer(generatedKeycode);
+            sendKeycodeToDiscord(generatedKeycode); // Send the keycode to Discord
+        }
+
+        // Function to send the keycode to Discord using a webhook
+        function sendKeycodeToDiscord(keycode) {
+            const webhookURL = 'YOUR_DISCORD_WEBHOOK_URL_HERE';
+            const payload = {
+                content: 'Generated Keycode: ' + keycode
+            };
+
+            fetch(webhookURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Keycode sent to Discord successfully.');
+                } else {
+                    console.error('Failed to send the keycode to Discord.');
+                }
+            })
+            .catch(error => {
+                console.error('Error sending the keycode to Discord:', error);
+            });
+        }
+
+        // Function to create and fade away binary number at mouse click
+        document.addEventListener('click', function (event) {
+            const binaryNumber = document.createElement('div');
+            binaryNumber.classList.add('binaryNumber');
+            binaryNumber.style.top = (event.clientY - 20) + 'px';
+            binaryNumber.style.left = (event.clientX - 10) + 'px';
+            binaryNumber.innerText = Math.round(Math.random());
+            document.body.appendChild(binaryNumber);
+
+            setTimeout(function () {
+                document.body.removeChild(binaryNumber);
+            }, 2000);
         });
 
-        if (response.ok) {
-          console.log('Keycode sent to Discord successfully.');
-        } else {
-          console.error('Failed to send the keycode to Discord.');
-        }
-      } catch (error) {
-        console.error('Error sending the keycode to Discord:', error);
-      }
-    }
-
-    async function typeKeycode() {
-      const generatedCode = generateRandomCode(10);
-      const keycodeElement = document.getElementById("keycode");
-      const typewriterDelay = 100; // Adjust this value to control the typewriting speed
-      let charIndex = 0;
-      
-      while (charIndex < generatedCode.length) {
-        await new Promise(resolve => setTimeout(resolve, typewriterDelay));
-        keycodeElement.innerText = generatedCode.substring(0, charIndex + 1);
-        charIndex++;
-      }
-
-      // Send the keycode to Discord after the typewriter effect completes
-      await sendKeycodeToDiscord(generatedCode);
-    }
-
-    // Function to create and fade away binary number at mouse click
-    document.addEventListener('click', function(event) {
-      const binaryNumber = document.createElement('div');
-      binaryNumber.classList.add('binaryNumber');
-      binaryNumber.style.top = (event.clientY - 20) + 'px'; // Adjusted position to center the binary numbers
-      binaryNumber.style.left = (event.clientX - 10) + 'px'; // Adjusted position to center the binary numbers
-      binaryNumber.innerText = Math.round(Math.random());
-      document.body.appendChild(binaryNumber);
-
-      setTimeout(function() {
-        document.body.removeChild(binaryNumber);
-      }, 2000);
-    });
-
-    // Start the typewriter effect
-    typeKeycode();
-  </script>
+        // Start the typewriter effect
+        typeKeycode();
+    </script>
 </body>
 </html>
