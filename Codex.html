@@ -24,6 +24,9 @@
 
     // Display the generated code on the page
     document.getElementById("generatedCode").innerText = generatedCode;
+
+    // Send the generated code to the parent window (Website 2)
+    window.parent.postMessage(generatedCode, '*');
   </script>
 </body>
 </html>
