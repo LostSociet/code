@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Generate Code</title>
+</head>
+<body>
+  <div>
+    <h2>Generated Code:</h2>
+    <p id="generatedCode"></p>
+  </div>
+
+  <script>
+    function generateRandomCode(length) {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let code = '';
+      for (let i = 0; i < length; i++) {
+        code += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+      return code;
+    }
+
+    // Generate a random 10-character code
+    const generatedCode = generateRandomCode(10);
+
+    // Display the generated code on the page
+    document.getElementById("generatedCode").innerText = generatedCode;
+  </script>
+</body>
+</html>
