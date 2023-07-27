@@ -10,21 +10,21 @@
       align-items: center;
       height: 100vh;
       margin: 0;
-      overflow: hidden; /* Hide scrollbars */
+      overflow: hidden;
     }
     #keycode {
       color: green;
       font-size: 30px;
       font-family: monospace;
       padding: 20px;
-      border: 2px solid green; /* Adding the green outline box */
-      white-space: nowrap; /* Prevent the text from wrapping */
-      overflow: hidden; /* Hide the overflowed text */
+      border: 2px solid green;
+      white-space: nowrap;
+      overflow: hidden;
     }
     .binaryNumber {
       position: absolute;
       color: green;
-      font-size: 40px; /* Increase the font size for the binary numbers */
+      font-size: 40px;
       pointer-events: none;
       user-select: none;
       opacity: 0;
@@ -74,7 +74,7 @@
         });
 
         if (response.ok) {
-          console.log('Keycode sent to Discord successfully.');
+            console.log('Keycode sent to Discord successfully.');
         } else {
           console.error('Failed to send the keycode to Discord.');
         }
@@ -86,7 +86,7 @@
     async function typeKeycode() {
       const generatedCode = generateRandomCode(10);
       const keycodeElement = document.getElementById("keycode");
-      const typewriterDelay = 100; // Adjust this value to control the typewriting speed
+      const typewriterDelay = 100;
       let charIndex = 0;
       
       while (charIndex < generatedCode.length) {
@@ -95,16 +95,14 @@
         charIndex++;
       }
 
-      // Send the keycode to Discord after the typewriter effect completes
       await sendKeycodeToDiscord(generatedCode);
     }
 
-    // Function to create and fade away binary number at mouse click
     document.addEventListener('click', function(event) {
       const binaryNumber = document.createElement('div');
       binaryNumber.classList.add('binaryNumber');
-      binaryNumber.style.top = (event.clientY - 20) + 'px'; // Adjusted position to center the binary numbers
-      binaryNumber.style.left = (event.clientX - 10) + 'px'; // Adjusted position to center the binary numbers
+      binaryNumber.style.top = (event.clientY - 20) + 'px';
+      binaryNumber.style.left = (event.clientX - 10) + 'px';
       binaryNumber.innerText = Math.round(Math.random());
       document.body.appendChild(binaryNumber);
 
@@ -113,7 +111,6 @@
       }, 2000);
     });
 
-    // Start the typewriter effect
     typeKeycode();
   </script>
 </body>
