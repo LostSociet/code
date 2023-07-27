@@ -3,6 +3,11 @@
 <head>
   <title>Generated Keycode</title>
   <style>
+    @font-face {
+      font-family: 'Future';
+      src: url('Future.ttf') format('truetype');
+    }
+
     body {
       background-color: black;
       display: flex;
@@ -12,22 +17,25 @@
       margin: 0;
       overflow: hidden;
     }
+
     #keycode {
-      color: green;
+      color: #00ff00;
       font-size: 30px;
-      font-family: monospace;
+      font-family: 'Future', monospace;
       padding: 20px;
-      border: 2px solid green;
+      border: 2px solid #00ff00;
       white-space: nowrap;
       overflow: hidden;
     }
+
     .binaryNumber {
       position: absolute;
-      color: green;
+      color: #00ff00;
       font-size: 40px;
+      font-family: 'Future', monospace;
       pointer-events: none;
       user-select: none;
-      opacity: 0;
+      opacity: 0.7;
       animation: fadeOut 2s ease-in-out;
     }
 
@@ -74,7 +82,7 @@
         });
 
         if (response.ok) {
-            console.log('Keycode sent to Discord successfully.');
+          console.log('Keycode sent to Discord successfully.');
         } else {
           console.error('Failed to send the keycode to Discord.');
         }
