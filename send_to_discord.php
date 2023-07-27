@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             echo 'Keycode sent to Discord successfully.';
         }
-        exit(); // Terminate PHP script execution after sending the response to the AJAX request
+        exit();
     }
 }
 ?>
